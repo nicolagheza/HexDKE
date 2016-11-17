@@ -43,7 +43,7 @@ public class GameOptWindow extends Window {
         x.setFontScale(1.1f);
         this.addActor(x);
 
-        boardSizeX = new TextField("6", skin);
+        boardSizeX = new TextField("", skin);
         boardSizeX.addListener(new FocusListener(){
             public void keyboardFocusChanged(FocusListener.FocusEvent event, Actor actor, boolean focused) {
                 if(equalSelected == true) {
@@ -58,7 +58,7 @@ public class GameOptWindow extends Window {
         boardSizeX.setMaxLength(5);
         this.addActor(boardSizeX);
 
-        boardSizeY = new TextField("6", skin);
+        boardSizeY = new TextField("", skin);
         boardSizeY.addListener(new FocusListener(){
             public void keyboardFocusChanged(FocusListener.FocusEvent event, Actor actor, boolean focused) {
                if(equalSelected == true){

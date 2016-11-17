@@ -1,6 +1,7 @@
 package com.dke.hex.desktop;
 
 import com.dke.hex.DataStructure.Board;
+import com.dke.hex.Players.AbstractPlayer;
 import com.dke.hex.Players.HumanPlayer;
 import com.dke.hex.Players.RandomAI;
 import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
@@ -20,8 +21,9 @@ public class DesktopLauncher extends JFrame{
 	public static DesktopLauncher dkl;
 	private LwjglAWTCanvas canvas;
 	private JPanel opt, screen, top, RB1, RB2, BB1, BB2;
-	boolean paused, init;
+	boolean paused, init, p1blue, p2red;
 	private int boardW, boardH;
+	AbstractPlayer Player1, Player2;
 
 	public DesktopLauncher() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,7 +63,7 @@ public class DesktopLauncher extends JFrame{
 		}
 	}
 
-	public void rem(final int i,final int j){
+	public void rem(final int i,final int j, AbstractPlayer p1, AbstractPlayer p2){
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -72,9 +74,10 @@ public class DesktopLauncher extends JFrame{
 				BoardView boardView =  new BoardView(board);
 
 				GameController gameController = new GameController(boardView.layout, boardView, 1);
-				gameController.currentPlayer = new RandomAI("RED");
-				gameController.otherPlayer = new HumanPlayer("BLUE");
-				//gameController.otherPlayer = new HumanPlayer("RED");
+				gameController.currentPlayer = p1;
+				gameController.otherPlayer = p2;
+				Player1 = gameController.otherPlayer; //p2
+				Player2 = gameController.currentPlayer; //p1
 				gameController.switchTurns(gameController);
 				createPanel();
 
@@ -212,23 +215,23 @@ public class DesktopLauncher extends JFrame{
 
 		if(player==1 && gController == 0){
 			GameController gameController = new GameController(boardView.layout, boardView, 1);
-			gameController.currentPlayer = new HumanPlayer("RED");
-			gameController.otherPlayer= new HumanPlayer("BLUE");
+			gameController.otherPlayer = Player2;
+			gameController.currentPlayer = Player1;
 			gameController.switchTurns(gameController);
 		}else if(player==0 && gController == 0){
 			GameController gameController = new GameController(boardView.layout, boardView, 1);
-			gameController.currentPlayer = new HumanPlayer("BLUE");
-			gameController.otherPlayer= new HumanPlayer("RED");
+			gameController.otherPlayer = Player1;
+			gameController.currentPlayer = Player2;
 			gameController.switchTurns(gameController);
 		}else if (player==1 && gController == 1) {
 			GameController gameController = new GameController(boardView.layout, boardView, 0);
-			gameController.currentPlayer = new HumanPlayer("RED");
-			gameController.otherPlayer= new HumanPlayer("BLUE");
+			gameController.otherPlayer = Player2;
+			gameController.currentPlayer = Player1;
 			gameController.switchTurns(gameController);
 		}else {
 			GameController gameController = new GameController(boardView.layout, boardView, 0);
-			gameController.currentPlayer = new HumanPlayer("BLUE");
-			gameController.otherPlayer= new HumanPlayer("RED");
+			gameController.otherPlayer = Player1;
+			gameController.currentPlayer = Player2;
 			gameController.switchTurns(gameController);
 		}
 

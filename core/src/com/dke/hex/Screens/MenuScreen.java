@@ -1,8 +1,6 @@
 package com.dke.hex.Screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,11 +27,16 @@ public class MenuScreen implements Screen, InputProcessor {
     PlayerOptWindow newPlayOpt;
     HelpWindow helpWindow;
     boolean gamePaused;
+    InputMultiplexer inputMux;
 
     public MenuScreen(HexDKE Game) {
         game = Game;
         batch = new SpriteBatch();
         stage = new Stage();
+
+        inputMux = new InputMultiplexer();
+        inputMux.addProcessor(this);
+        inputMux.addProcessor(stage);
 
         skin = new Skin(Gdx.files.internal("uiskin.json"));
 
@@ -110,7 +113,7 @@ public class MenuScreen implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(inputMux);
 
     }
 
@@ -181,6 +184,14 @@ public class MenuScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.ENTER) {
+            if(newGameOpt.visible){
+                newGameOpt.startButton.toggle();
+            }else if (!newPlayOpt.hidePlayOpt){
+                newPlayOpt.startButton.toggle();
+            }
+            return true;
+        }
         return false;
     }
 

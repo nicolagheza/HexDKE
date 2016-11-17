@@ -4,6 +4,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.dke.hex.HexDKE;
+import com.dke.hex.Players.AbstractPlayer;
+import com.dke.hex.Players.HumanPlayer;
+import com.dke.hex.Players.RandomAI;
 import com.dke.hex.Screens.MenuScreen;
 import com.dke.hex.desktop.DesktopLauncher;
 
@@ -12,10 +15,13 @@ public class PlayerOptWindow extends Window {
     HexDKE game;
     MenuScreen menu;
     Label Player1, Player2, p1AIDiff, p2AIDiff, p1Diff, p2Diff;
+    final SelectBox<String> PlayerType1, PlayerType2;
     String[] pType = new String[]{" Human", "       AI"}; //Using spaces to center text. Terrible solution
     Slider P1DiffSlider, P2DiffSlider;
     public boolean hidePlayOpt;
     public int boardX, boardY;
+    public TextButton startButton;
+    AbstractPlayer p1, p2;
 
     public PlayerOptWindow(Skin skin, HexDKE Game, final MenuScreen screen) {
         super("Player Options", skin);
@@ -37,10 +43,21 @@ public class PlayerOptWindow extends Window {
         gOptButton.setPosition(135,40);
         gOptButton.setSize(90,40);
 
-        TextButton startButton = new TextButton("Start", skin);
+        startButton = new TextButton("Start", skin);
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                if(PlayerType1.getSelected()==" Human"){
+                    p1 = new HumanPlayer("RED");
+                }else if(P1DiffSlider.getValue()==1){
+                    p1 = new RandomAI("RED");
+                }
+                if(PlayerType2.getSelected()==" Human"){
+                    p2 = new HumanPlayer("BLUE");
+                }else if(P2DiffSlider.getValue()==1){
+                    p2 = new RandomAI("BLUE");
+                }
+
                 remove();
                 setGameScreen();
 
@@ -50,7 +67,7 @@ public class PlayerOptWindow extends Window {
         startButton.setPosition(275,40);
         startButton.setSize(90,40);
 
-        final SelectBox<String> PlayerType1 = new SelectBox<String>(skin);
+        PlayerType1 = new SelectBox<String>(skin);
         PlayerType1.setSize(83,50);
         this.addActor(PlayerType1);
         PlayerType1.setItems(pType);
@@ -68,7 +85,7 @@ public class PlayerOptWindow extends Window {
         });
         PlayerType1.setPosition(160, 182);
 
-        final SelectBox<String> PlayerType2 = new SelectBox<String>(skin);
+        PlayerType2 = new SelectBox<String>(skin);
         PlayerType2.setSize(83,50);
         this.addActor(PlayerType2);
         PlayerType2.setItems(pType);
@@ -118,7 +135,8 @@ public class PlayerOptWindow extends Window {
 
     }
     public void setGameScreen(){
-        DesktopLauncher.dkl.rem(boardX,boardY);
+        //Order of players reversed because turns are swapped before game is played
+        DesktopLauncher.dkl.rem(boardX,boardY, p2, p1);
         //game.setScreen(new GameScreen(game));
     }
 
