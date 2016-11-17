@@ -1,9 +1,9 @@
 package com.dke.hex.desktop;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
 import com.dke.hex.DataStructure.Board;
 import com.dke.hex.Players.HumanPlayer;
 import com.dke.hex.Players.RandomAI;
-import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
 import com.dke.hex.BoardView;
 import com.dke.hex.GameController;
 import com.dke.hex.HexDKE;
