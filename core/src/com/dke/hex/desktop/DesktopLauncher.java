@@ -1,6 +1,7 @@
 package com.dke.hex.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglAWTCanvas;
+//libgdx/backends/gdx-backend-lwjgl/src/com/badlogic/gdx/backends/lwjgl/LwjglAWTCanvas.java
 import com.dke.hex.DataStructure.Board;
 import com.dke.hex.Players.AbstractPlayer;
 import com.dke.hex.Players.HumanPlayer;
@@ -63,7 +64,7 @@ public class DesktopLauncher extends JFrame{
 		}
 	}
 
-	public void rem(final int i,final int j, AbstractPlayer p1, AbstractPlayer p2){
+	public void rem(final int i, final int j, final AbstractPlayer p1, final AbstractPlayer p2){
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -187,7 +188,7 @@ public class DesktopLauncher extends JFrame{
 				}else{
 					i=0;
 				}
-				if(yButton.isSelected()){
+				if(rButton.isSelected()){
 					j=1;
 				}else{
 					j=0;
