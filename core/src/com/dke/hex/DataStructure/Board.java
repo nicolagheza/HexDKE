@@ -42,6 +42,14 @@ public class Board{
         }
     }
 
+    public HashMap<Vector3, Hex> emptySpaces(){
+        HashMap<Vector3, Hex> emptyMap = new HashMap<>();
+        for(int i = 0; i<map.size(); i++){
+            if (map.get(i).getOwner()==null) emptyMap.put(i,map.get(i));
+        }
+        return emptyMap;
+    }
+
     public List<Vector3> getNeighbours(Vector3 coord) {
 
         if (!map.containsKey(coord))
